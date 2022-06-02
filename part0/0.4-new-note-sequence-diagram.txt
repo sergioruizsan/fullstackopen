@@ -1,0 +1,50 @@
+# 0.4: New note
+# You can run this on https://www.websequencediagrams.com/
+
+title 0.4-new-note-sequence-diagram
+
+note over browser:
+user enters "hola" in the input text
+and clicks on the save button of type submit
+end note
+
+note over browser:
+browser triggers HTTP POST with the header
+"Content-type":"text/html; charset=utf-8"
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note, body: note=hola
+server-->browser: HTTP 302 URL redirect - Location: /exampleapp/notes
+
+note over browser:
+browser requests 
+the notes page
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTML-code
+
+note over browser:
+browser requests the css and js resources 
+present in the <head> of the HTML
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: main.js
+
+note over browser:
+browser executes the javascript code, which
+triggers an HTTP request to get the notes
+from the server in JSON format
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: [{content: "hola", date: "2022-05-29T00:03:26.114Z"}, ...]
+
+note over browser:
+browser executes the onreadystatechange event 
+handler that manages the response and then
+generates the HTML code to display the notes
+end note

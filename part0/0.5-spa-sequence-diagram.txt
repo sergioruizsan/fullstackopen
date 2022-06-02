@@ -1,0 +1,27 @@
+# 0.5: Single page app
+# You can run this on https://www.websequencediagrams.com/
+
+title 0.5-spa-sequence-diagram
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server-->browser: HTML-code
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server-->browser: spa.js
+
+note over browser:
+browser executes the javascript code, which
+triggers an HTTP request to get the notes
+from the server in JSON format
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: [{content: "hola", date: "2022-05-29T00:03:26.114Z"}, ...]
+
+note over browser:
+browser executes the onreadystatechange event 
+handler that manages the response and then
+generates the HTML code to display the notes
+end note

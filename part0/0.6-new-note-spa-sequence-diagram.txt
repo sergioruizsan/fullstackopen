@@ -1,0 +1,32 @@
+# 0.6: New note
+# You can run this on https://www.websequencediagrams.com/
+
+title 0.6-new-note-spa-sequence-diagram
+
+note over browser:
+user enters "hola" in the input text
+and clicks on the save button
+end note
+
+note over browser:
+browser executes javascript code, creating 
+a JSON object from the user input and adding
+it to the current list (array)
+end note
+
+note over browser:
+browser executes javascript code, re-rendering 
+the notes list, which includes the newly 
+created note
+end note
+
+note over browser:
+browser executes javascript code, which generates 
+an HTTP POST request, containing the previously
+created JSON object and setting the header 
+"Content-type":"application/json", so the server 
+can understand how to parse the data
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note, body: {"content":"hola","date":"2022-05-29T19:56:16.390Z"}
+server-->browser: HTTP 201 Created - body: {"message":"note created"}
