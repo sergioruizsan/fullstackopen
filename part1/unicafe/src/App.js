@@ -6,6 +6,10 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const total = good + neutral + bad
+  const average = (good - bad) / total
+  const positive = good / total * 100
+
   return (
     <>
     <div>
@@ -18,6 +22,9 @@ const App = () => {
       <div>good {good}</div>
       <div>neutral {neutral}</div>
       <div>bad {bad}</div>
+      <div>all {total}</div>
+      <div>average {Number.isNaN(average) ? 0 : average}</div>
+      <div>positive {Number.isNaN(positive) ? 0 : positive} %</div>
     </div>
     </>
   )
