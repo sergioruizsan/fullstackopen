@@ -1,14 +1,28 @@
 import { useState } from "react"
 
+
+const Statistics = ({good, bad, neutral}) => {
+
+  const total = good + neutral + bad
+  const average = (good - bad) / total
+  const positive = good / total * 100
+
+  return (
+    <>
+      <div>all {total}</div>
+      <div>average {Number.isNaN(average) ? 0 : average}</div>
+      <div>positive {Number.isNaN(positive) ? 0 : positive} %</div>
+    </>
+  )
+
+}
+
+
 const App = () => {
 
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-
-  const total = good + neutral + bad
-  const average = (good - bad) / total
-  const positive = good / total * 100
 
   return (
     <>
@@ -22,9 +36,7 @@ const App = () => {
       <div>good {good}</div>
       <div>neutral {neutral}</div>
       <div>bad {bad}</div>
-      <div>all {total}</div>
-      <div>average {Number.isNaN(average) ? 0 : average}</div>
-      <div>positive {Number.isNaN(positive) ? 0 : positive} %</div>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
     </>
   )
