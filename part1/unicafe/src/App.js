@@ -1,6 +1,10 @@
 import { useState } from "react"
 
 
+const Header = ({title}) => (
+  <h2>{title}</h2>
+)
+
 const Button = ({clickHandler, text}) => (
   <button onClick={clickHandler}>{text}</button>
 )
@@ -45,12 +49,11 @@ const App = () => {
   return (
     <>
     <div>
-      <h1>Unicafe</h1>
-      <h2>give feedback</h2>
+      <Header title="give feedback"/>
       <Button clickHandler={() => setGood(good + 1)} text="good"/>
       <Button clickHandler={() => setNeutral(neutral + 1)} text="neutral"/>
       <Button clickHandler={() => setBad(bad + 1)} text="bad"/>
-      <h2>statistics</h2>
+      <Header title="statistics"/>
       <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
     </>
