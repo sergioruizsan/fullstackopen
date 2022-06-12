@@ -5,8 +5,11 @@ const Button = ({clickHandler, text}) => (
   <button onClick={clickHandler}>{text}</button>
 )
 
-const StatisticLine = ({text, value}) => (
-  <div>{text} {value}</div>
+const StatisticRow = ({text, value}) => (
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 )
 
 const Statistics = ({good, bad, neutral}) => {
@@ -18,14 +21,16 @@ const Statistics = ({good, bad, neutral}) => {
   if(total === 0 ) return (<div>No feedback given</div>)
 
   return (
-    <>
-      <StatisticLine text="good" value={good}/>
-      <StatisticLine text="neutral" value={neutral}/>
-      <StatisticLine text="bad" value={bad}/>
-      <StatisticLine text="all" value={total}/>
-      <StatisticLine text="average" value={average}/>
-      <StatisticLine text="positive" value={`${positive} %`}/>
-    </>
+    <table>
+      <tbody>
+      <StatisticRow text="good" value={good}/>
+      <StatisticRow text="neutral" value={neutral}/>
+      <StatisticRow text="bad" value={bad}/>
+      <StatisticRow text="all" value={total}/>
+      <StatisticRow text="average" value={average}/>
+      <StatisticRow text="positive" value={`${positive} %`}/>
+      </tbody>
+    </table>
   )
 
 }
