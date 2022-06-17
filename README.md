@@ -6,7 +6,7 @@ created by the Department of Computer Science at the University of Helsinki.
 ## Content
 
 - [x] Part 0 - Fundamentals of Web apps
-- [ ] Part 1 - Introduction to React
+- [x] Part 1 - Introduction to React
 - [ ] Part 2 - Communicating with server
 - [ ] Part 3 - Programming a server with NodeJS and Express
 - [ ] Part 4 - Testing Express servers, user administration
