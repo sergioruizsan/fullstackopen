@@ -1,6 +1,6 @@
 const Filter = ({ value, onChangeHandler }) => (
     <div>
-        <label for="person-filter">
+        <label htmlFor="person-filter">
         {`filter shown with `}
         </label>
         <input

@@ -1,7 +1,7 @@
 
 const Field = ({ text, value, changeHandler }) => (
     <div>
-        <label for={text}>
+        <label htmlFor={text}>
             {`${text}: `}
         </label>
         <input
