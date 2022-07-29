@@ -4,6 +4,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const HTTP_NOT_FOUND = 404
 
@@ -12,6 +13,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [notification, setNotification ] = useState({ type:null, message:null })
 
   useEffect(() =>{
     personService
@@ -21,6 +23,17 @@ const App = () => {
       })
   }, [])
 
+  const triggerNotification = (type, message) => {
+    setNotification({
+      type,
+      message
+    })
+    setTimeout(() => setNotification({
+      type: null,
+      message: null
+    }), 3000)
+  }
+
   const createPerson = (newPerson) => {
     personService
       .create(newPerson)
@@ -28,8 +41,13 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+        triggerNotification('success', `Added ${newPerson.name}`)
       }).catch((error) => {
-        alert(`Oops there was an error, try again later`)
+        console.log(error)
+        triggerNotification(
+          'error',
+          'Oops there was an error, try again later'
+        )
       })
   }
 
@@ -42,9 +60,14 @@ const App = () => {
         ))
         setNewName('')
         setNewNumber('')
+        triggerNotification('success', `Updated ${updatedPerson.name}`)
       }).catch((error) => {
+        console.log(error)
         if (error.response.status === HTTP_NOT_FOUND) {
-          alert(`The person ${updatedPerson.name} does not exist anymore`)
+          triggerNotification(
+            'error',
+            `The person ${updatedPerson.name} does not exist anymore`
+          )
           setPersons(persons.filter(person => person.id !== updatedPerson.id))
         }
       })
@@ -58,10 +81,14 @@ const App = () => {
         .then(() => {
           const newPersons = persons.filter(person => person.id !== id)
           setPersons(newPersons)
+          triggerNotification('success', `Deleted ${name}`)
         }).catch((error) => {
           console.log(error)
           if (error.response.status === HTTP_NOT_FOUND) {
-            alert(`The person ${name} was already deleted`)
+            triggerNotification(
+              'error',
+              `Information of ${name} has already been removed from server`
+            )
             setPersons(persons.filter(person => person.id !== id))
           }
         })
@@ -99,6 +126,10 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification
+        type={notification.type}
+        message={notification.message}
+      />
       <Filter value={newFilter} onChangeHandler={handleFilterChange}/>
       <h2>Add a new</h2>
       <PersonForm 
