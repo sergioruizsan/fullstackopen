@@ -8,7 +8,7 @@ const getFiltered = (persons, filter) => (
     ))
 )
 
-const Persons = ({ persons, filter }) => {
+const Persons = ({ persons, filter, onDelete }) => {
     const filteredPersons = getFiltered(persons, filter)
     return (
         <ul
@@ -19,7 +19,11 @@ const Persons = ({ persons, filter }) => {
         >
             {
                 filteredPersons.map(person =>
-                    <Person key={person.name} person={person} />
+                    <Person
+                        key={person.name}
+                        person={person}
+                        onDelete={onDelete}
+                    />
                 )
             }
         </ul>
