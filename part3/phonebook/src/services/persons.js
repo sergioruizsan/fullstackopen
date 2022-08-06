@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const port = process.env.REACT_APP_BACKEND_PORT
-const baseUrl = `http://localhost:${port}/api/persons`
+// const port = process.env.REACT_APP_BACKEND_PORT
+// const baseUrl = `http://localhost:${port}/api/persons`
+const baseUrl = `/api/persons`
 
 const getAll = () => {
     const request = axios.get(baseUrl)
