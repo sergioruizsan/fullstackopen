@@ -105,7 +105,6 @@ const App = () => {
       if (shouldUpdate) {
         const updatedPerson = {
           ...personExists,
-          name: newName,
           number: newNumber,
         }
         updatePerson(updatedPerson)
