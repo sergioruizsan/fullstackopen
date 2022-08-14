@@ -13,6 +13,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [action, setAction] = useState('add')
   const [notification, setNotification ] = useState({ type:null, message:null })
 
   useEffect(() =>{
@@ -46,7 +47,7 @@ const App = () => {
         console.log(error)
         triggerNotification(
           'error',
-          'Oops there was an error, try again later'
+          error?.response?.data?.error ?? 'Oops there was an error, try again later'
         )
       })
   }
@@ -69,6 +70,11 @@ const App = () => {
             `The person ${updatedPerson.name} does not exist anymore`
           )
           setPersons(persons.filter(person => person.id !== updatedPerson.id))
+        } else {
+          triggerNotification(
+            'error',
+            error?.response?.data?.error ?? 'Oops there was an error, try again later'
+          )
         }
       })
   }
@@ -95,31 +101,32 @@ const App = () => {
     }
   }
 
-  const addName = (event) => {
+  const addOrUpdatePerson = (event) => {
     event.preventDefault()
-    
-    const personExists = persons.find((person) => person.name === newName)
 
-    if (personExists) {
-      const shouldUpdate = window.confirm(`${personExists.name} is already added to phonebook, replace the old number with a new one?`)
-      if (shouldUpdate) {
-        const updatedPerson = {
-          ...personExists,
-          number: newNumber,
-        }
-        updatePerson(updatedPerson)
-      }
-    } else {
+    if(action === 'add'){
       const newPerson = {
         name: newName,
         number: newNumber,
       }
       createPerson(newPerson)
     }
+
+    if(action === 'update'){
+      const person = persons.find((person) => person.name === newName)
+      if(person){
+        const updatedPerson = {
+          ...person,
+          number: newNumber,
+        }
+        updatePerson(updatedPerson)
+      }
+    }
   }
 
   const handleNameChange = (event) => setNewName(event.target.value)
   const handleNumberChange = (event) => setNewNumber(event.target.value)
+  const handleActionChange = (event) => setAction(event.target.value)
   const handleFilterChange = (event) => setNewFilter(event.target.value)
 
   return (
@@ -131,12 +138,14 @@ const App = () => {
       />
       <Filter value={newFilter} onChangeHandler={handleFilterChange}/>
       <h2>Add a new</h2>
-      <PersonForm 
-        onSubmitHandler={addName}
+      <PersonForm
+        onSubmitHandler={addOrUpdatePerson}
         nameValue={newName}
         nameChangeHandler={handleNameChange}
         numberValue={newNumber}
         numberChangeHandler={handleNumberChange}
+        actionValue={action}
+        actionChangeHandler={handleActionChange}
       />
       <h2>Numbers</h2>
       <Persons
